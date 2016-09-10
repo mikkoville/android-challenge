@@ -8,5 +8,6 @@ import com.mikkoville.githubviewer.view.activity.CommitsListView;
 public interface GitHubPresenter extends LifecyclePresenter {
     void loadCommitsFromGithub(String owner, String repo);
     void setView(CommitsListView view);
+    void loadMoreCommitsSinceDate(String owner, String repo, String date);
     
 }

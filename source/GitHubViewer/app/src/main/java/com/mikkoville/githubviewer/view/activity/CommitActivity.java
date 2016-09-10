@@ -31,7 +31,7 @@ public class CommitActivity extends AppCompatActivity implements CommitDetailsVi
 
         Bundle b = this.getIntent().getExtras();
         if (b != null){
-            Commit commit = b.getParcelable(Constants.DETAILS_COMMENT);
+            Commit commit = b.getParcelable(Constants.DETAILS_COMMIT);
             if(commit != null){
                 showCommitDetails(commit);
             }

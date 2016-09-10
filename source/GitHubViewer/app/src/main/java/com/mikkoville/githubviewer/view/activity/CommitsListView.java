@@ -9,7 +9,8 @@ import java.util.List;
  */
 public interface CommitsListView {
 
-    void populateList(List<Commit> commits);
+    void populateRecyclerView(List<Commit> commits);
     void showNetworkError();
     void startCommitDetailsActivity(Commit commit);
+    void addMoreCommitsToRecyclerView(List<Commit> commits);
 }

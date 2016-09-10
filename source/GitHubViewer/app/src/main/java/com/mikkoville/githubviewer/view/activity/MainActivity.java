@@ -14,6 +14,7 @@ import com.mikkoville.githubviewer.Constants;
 import com.mikkoville.githubviewer.GitHubApplication;
 import com.mikkoville.githubviewer.R;
 import com.mikkoville.githubviewer.adapters.CommitsAdapter;
+import com.mikkoville.githubviewer.adapters.EndOfRecyclerViewlistener;
 import com.mikkoville.githubviewer.model.Commit;
 import com.mikkoville.githubviewer.presentation.GitHubPresenter;
 
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements CommitsListView {
 
     @BindView(R.id.commits_recyclerView) RecyclerView recyclerView;
 
+    private LinearLayoutManager layoutManager;
+    private CommitsAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements CommitsListView {
 
         gitHubPresenter.setView(this);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
     }
 
@@ -78,14 +82,23 @@ public class MainActivity extends AppCompatActivity implements CommitsListView {
     }
 
     @Override
-    public void populateList(List<Commit> commits) {
-        recyclerView.setAdapter(new CommitsAdapter(commits, new CommitsAdapter.OnItemClickListener() {
+    public void populateRecyclerView(List<Commit> commits) {
+        adapter = new CommitsAdapter(commits, new CommitsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Commit commit) {
-                Timber.d("Commit clicked %s", commit.getCommit().getAuthor().getName());
                 startCommitDetailsActivity(commit);
             }
-        }));
+        });
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.addOnScrollListener(new EndOfRecyclerViewlistener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Timber.d("End of list");
+                String date = adapter.getLastCommitDate();
+                gitHubPresenter.loadMoreCommitsSinceDate("android", "platform_build", date);
+            }
+        });
     }
 
     @Override
@@ -97,10 +110,17 @@ public class MainActivity extends AppCompatActivity implements CommitsListView {
     public void startCommitDetailsActivity(Commit commit) {
         Intent i = new Intent();
         Bundle b = new Bundle();
-        b.putParcelable(Constants.DETAILS_COMMENT, commit);
+        b.putParcelable(Constants.DETAILS_COMMIT, commit);
         i.putExtras(b);
         i.setClass(this, CommitActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    public void addMoreCommitsToRecyclerView(List<Commit> commits) {
+        int currentSize = adapter.getItemCount();
+        adapter.getCommitList().addAll(commits);
+        adapter.notifyItemRangeChanged(currentSize, adapter.getCommitList().size() - 1);
     }
 
 }

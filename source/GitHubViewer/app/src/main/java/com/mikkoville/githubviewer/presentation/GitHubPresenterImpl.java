@@ -1,5 +1,6 @@
 package com.mikkoville.githubviewer.presentation;
 
+import com.mikkoville.githubviewer.Constants;
 import com.mikkoville.githubviewer.data.GitHubApi;
 import com.mikkoville.githubviewer.model.Commit;
 import com.mikkoville.githubviewer.view.activity.CommitsListView;
@@ -30,7 +31,7 @@ public class GitHubPresenterImpl implements GitHubPresenter {
             @Override
             public void onResponse(Call<List<Commit>> call, Response<List<Commit>> response) {
                 List<Commit> commits = response.body();
-                view.populateList(commits);
+                view.populateRecyclerView(commits);
             }
 
             @Override
@@ -45,10 +46,27 @@ public class GitHubPresenterImpl implements GitHubPresenter {
         this.view = view;
     }
 
-    //owner and name of repo hardcoded
+    @Override
+    public void loadMoreCommitsSinceDate(String owner, String repo, String date) {
+        Timber.d("Load more commit since %s", date);
+        gitHubApi.getCommitsUntil(owner, repo, date).enqueue(new Callback<List<Commit>>() {
+            @Override
+            public void onResponse(Call<List<Commit>> call, Response<List<Commit>> response) {
+                List<Commit> commits = response.body();
+                view.addMoreCommitsToRecyclerView(commits);
+            }
+
+            @Override
+            public void onFailure(Call<List<Commit>> call, Throwable t) {
+                view.showNetworkError();
+            }
+        });
+    }
+
+    //repo and owner hardcoded
     @Override
     public void resume() {
-        loadCommitsFromGithub("android", "platform_build");
+        loadCommitsFromGithub(Constants.REPO_OWNER, Constants.ANDROID_REPO);
     }
 
     @Override

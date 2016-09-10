@@ -88,4 +88,12 @@ public class CommitsAdapter extends RecyclerView.Adapter<CommitsAdapter.ViewHold
     public int getItemCount() {
         return commitList.size();
     }
+
+    public String getLastCommitDate(){
+        return commitList.get(commitList.size() -1).getCommit().getAuthor().getDate();
+    }
+
+    public List<Commit> getCommitList() {
+        return commitList;
+    }
 }
