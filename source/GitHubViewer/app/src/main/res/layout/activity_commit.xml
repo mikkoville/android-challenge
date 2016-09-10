@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/details_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:padding="4dp"
+        tools:text="Author:Colin Cross"/>
+
+    <TextView
+        android:id="@+id/details_sha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:padding="4dp"
+        tools:text="Sha: 067d7815302fa0eeb508e7f8f436392d8d719b10"/>
+
+    <TextView
+        android:id="@+id/details_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:padding="4dp"
+        tools:text="Message: Remove global linker search paths Remove the global linker search path, as it can cause spurious build failures. If a library with the same name as a system library is in the process of being written to the directory in the global search path, and the linker may try to read the partially-written built one instead of the system one. We already use full paths to libraries for target builds, do the same for host builds. Also remove the normalize library functions, they are no longer necessary. Test: m -j checkbuild Bug: 31393456 Change-Id: If9fc631e111f568c700fd73e103445c30d7e9d11"/>
+
+    <TextView
+        android:id="@+id/details_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="italic"
+        android:padding="4dp"
+        tools:text="Date: 2016-09-09T17:09:47Z"/>
+
+    <TextView
+        android:id="@+id/details_html_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:autoLink="web"
+        android:padding="4dp"
+        tools:text="https://github.com/android/platform_build/commit/067d7815302fa0eeb508e7f8f436392d8d719b10"/>
+</LinearLayout>

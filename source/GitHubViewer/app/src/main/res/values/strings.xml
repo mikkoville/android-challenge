@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GitHubViewer</string>
+    <string name="action_settings">Settings</string>
+    <string name="avatar_icon">Avatar icon</string>
+    <string name="details_activity">Details about commit</string>
+    <string name="details_author">Author: %s</string>
+    <string name="details_date">Date: %s</string>
+    <string name="details_sha">Sha: %s</string>
+    <string name="details_message">Message: %s</string>
+</resources>

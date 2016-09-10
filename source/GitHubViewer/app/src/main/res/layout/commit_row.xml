@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="#f2f2f2"
+    android:layout_marginBottom="4dp">
+
+    <LinearLayout
+        android:id="@+id/comment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/avatar_icon"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/comment_author"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            tools:text="Author" />
+
+        <TextView
+            android:id="@+id/comment_text"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="Prevent Kati from seeing MAKEFLAGS\n\nWe never want Kati to see MAKEFLAGS, as forcefully overriding variables\nis terrible. The variables in MAKEFLAGS are still available in the\nenvironment, so if part of the build wants input from the user, it\nshould be explicitly checking for an environment variable or using ?=\n\nThis commit shouldn't actually change any behavior -- the version of\nKati checked into our tree doesn't actually read MAKEFLAGS (the latest\nversion does, which is why this change is necessary). We're also already\nclearing MAKEFLAGS during makeparallel, so the USE_GOMA case already\ndoesn't pass through MAKEFLAGS.\n\nTest: Manual $(warnings $(origin MYTEST) $(MYTEST)) with old and new Kati\nChange-Id: I5e4ffa66b3539a539cc7a26da24645b11445c469" />
+
+        <TextView
+            android:id="@+id/comment_date"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            tools:text="11.01.2016" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/avatar_icon"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/avatar_icon" />
+
+
+</RelativeLayout>
