@@ -46,12 +46,19 @@ public class CommitsAdapter extends RecyclerView.Adapter<CommitsAdapter.ViewHold
         public void bindItem(final Commit commit, final OnItemClickListener listener){
             authorTextView.setText(commit.getCommit().getAuthor().getName());
             commentTextView.setText(commit.getCommit().getMessage());
-            commentDateTextView.setText(commit.getCommit().getAuthor().getDate());
+            commentDateTextView.setText((commit.getCommit().getAuthor().getDate()));
 
             Context localContext = itemView.getContext();
             if(localContext != null && commit.getAuthor() != null ){
                 Picasso.with(localContext)
                         .load(commit.getAuthor().getAvatar_url())
+                        .resize(80,100)
+                        .centerInside()
+                        .into(avatarImageView);
+            }else {
+                //load default octocat
+                Picasso.with(localContext)
+                        .load("https://avatars3.githubusercontent.com/u/9919?v=3")
                         .resize(80,100)
                         .centerInside()
                         .into(avatarImageView);

@@ -27,6 +27,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
+
+
 public class MainActivity extends AppCompatActivity implements CommitsListView {
 
     public static final String RECYCLERVIEW_STATE = "recyclerViewState";
