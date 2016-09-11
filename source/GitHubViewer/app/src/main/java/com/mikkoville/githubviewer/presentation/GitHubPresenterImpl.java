@@ -27,11 +27,17 @@ public class GitHubPresenterImpl implements GitHubPresenter {
     @Override
     public void loadCommitsFromGithub(String owner, String repo) {
         Timber.d("Loading commits from GitHub");
+        view.showToastWithText("Loading commits...");
         gitHubApi.getCommits(owner, repo).enqueue(new Callback<List<Commit>>() {
             @Override
             public void onResponse(Call<List<Commit>> call, Response<List<Commit>> response) {
-                List<Commit> commits = response.body();
-                view.populateRecyclerView(commits);
+                if(response.isSuccessful()){
+                    List<Commit> commits = response.body();
+                    view.addCommitsToRecyclerView(commits);
+                }else {
+                    Timber.i("Response failed: %s", response.errorBody().toString());
+                    view.showNetworkError();
+                }
             }
 
             @Override
@@ -47,13 +53,19 @@ public class GitHubPresenterImpl implements GitHubPresenter {
     }
 
     @Override
-    public void loadMoreCommitsSinceDate(String owner, String repo, String date) {
+    public void loadCommitsUntilDate(String owner, String repo, String date) {
         Timber.d("Load more commit since %s", date);
+        view.showToastWithText("Loading more commits");
         gitHubApi.getCommitsUntil(owner, repo, date).enqueue(new Callback<List<Commit>>() {
             @Override
             public void onResponse(Call<List<Commit>> call, Response<List<Commit>> response) {
-                List<Commit> commits = response.body();
-                view.addMoreCommitsToRecyclerView(commits);
+                if(response.isSuccessful()){
+                    List<Commit> commits = response.body();
+                    view.addCommitsToRecyclerView(commits);
+                }else {
+                    Timber.i("Response failed: %s", response.errorBody().toString());
+                    view.showNetworkError();
+                }
             }
 
             @Override
@@ -71,6 +83,5 @@ public class GitHubPresenterImpl implements GitHubPresenter {
 
     @Override
     public void pause() {
-
     }
 }

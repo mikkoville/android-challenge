@@ -17,6 +17,26 @@ public class Commit implements Parcelable {
     private Author_ author;
     private List<Parent> parents = new ArrayList<Parent>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Commit)) {
+            return false;
+        }
+
+        Commit commit1 = (Commit) o;
+
+        if (!sha.equals(commit1.sha)) return false;
+        return html_url.equals(commit1.html_url);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sha.hashCode();
+        result = 31 * result + commit.hashCode();
+        return result;
+    }
+
     /**
      * 
      * @return

@@ -10,7 +10,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
- * Created by ukkeli on 7.9.2016.
+ * Created by mikkoville on 7.9.2016.
  */
 public interface GitHubApi {
 
@@ -23,6 +23,13 @@ public interface GitHubApi {
     @GET("repos/{owner}/{repo}/commits")
     Call<List<Commit>> getCommits(@Path("owner") String owner, @Path("repo") String repo);
 
+    /**
+     *
+     * @param owner owner of repo
+     * @param repo name of repo
+     * @param until date
+     * @return
+     */
     @GET( "repos/{owner}/{repo}/commits")
     Call<List<Commit>> getCommitsUntil(@Path("owner") String owner, @Path("repo") String repo, @Query("until") String until);
 }

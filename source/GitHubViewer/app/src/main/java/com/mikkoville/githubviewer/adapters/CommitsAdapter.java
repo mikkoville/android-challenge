@@ -12,8 +12,6 @@ import com.mikkoville.githubviewer.R;
 import com.mikkoville.githubviewer.model.Commit;
 import com.squareup.picasso.Picasso;
 
-
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
@@ -88,6 +86,8 @@ public class CommitsAdapter extends RecyclerView.Adapter<CommitsAdapter.ViewHold
     public int getItemCount() {
         return commitList.size();
     }
+
+
 
     public String getLastCommitDate(){
         return commitList.get(commitList.size() -1).getCommit().getAuthor().getDate();

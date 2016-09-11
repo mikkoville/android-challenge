@@ -27,6 +27,8 @@ ext {
     javaxAnntotationVersion = '1.0'
     butterKnifeVersion = '8.4.0'
     picassoVersion = '2.5.2'
+    junitVersion = '4.12'
+    mockitoVersion = '1.10.19'
 }
 
 dependencies {
@@ -50,5 +52,10 @@ dependencies {
     compile "com.jakewharton:butterknife:$butterKnifeVersion"
     apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
 
+    //images with picasso
     compile "com.squareup.picasso:picasso:$picassoVersion"
+
+    // Testing
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
 }

@@ -7,4 +7,5 @@
     <string name="details_date">Date: %s</string>
     <string name="details_sha">Sha: %s</string>
     <string name="details_message">Message: %s</string>
+    <string name="action_refresh">Refresh list</string>
 </resources>

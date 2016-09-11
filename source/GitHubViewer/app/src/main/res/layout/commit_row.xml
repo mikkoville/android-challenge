@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/avatar_icon"
         android:layout_toLeftOf="@+id/avatar_icon"
         android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"

@@ -11,11 +11,14 @@ import com.mikkoville.githubviewer.model.Commit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
- * Created by ukkeli on 10.9.2016.
+ * Created by mikkoville on 10.9.2016.
  */
 public class CommitActivity extends AppCompatActivity implements CommitDetailsView{
+
+    public static final String COMMIT = "commit";
 
     @BindView(R.id.details_author) TextView authorTextViev;
     @BindView(R.id.details_sha) TextView shaTextViev;
@@ -23,29 +26,42 @@ public class CommitActivity extends AppCompatActivity implements CommitDetailsVi
     @BindView(R.id.details_date) TextView dateTextViev;
     @BindView(R.id.details_html_link) TextView linkTextViev;
 
+    private Commit commit;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commit);
         ButterKnife.bind(this);
 
-        Bundle b = this.getIntent().getExtras();
-        if (b != null){
-            Commit commit = b.getParcelable(Constants.DETAILS_COMMIT);
-            if(commit != null){
-                showCommitDetails(commit);
+        if(savedInstanceState != null){
+            Timber.d("Get commit from savedInstanceState");
+            commit = savedInstanceState.getParcelable(COMMIT);
+        }else {
+            Timber.d("Get new commit from bundle");
+            Bundle b = this.getIntent().getExtras();
+            if (b != null){
+                commit = b.getParcelable(Constants.DETAILS_COMMIT);
             }
         }
-
-
+        if(commit != null){
+            showCommitDetails();
+        }
     }
 
     @Override
-    public void showCommitDetails(Commit commit) {
+    public void showCommitDetails() {
         authorTextViev.setText(getString(R.string.details_author, commit.getCommit().getAuthor().getName()));
         dateTextViev.setText(getString(R.string.details_date, commit.getCommit().getAuthor().getDate()));
         shaTextViev.setText(getString(R.string.details_sha, commit.getSha()));
         messageTextViev.setText(getString(R.string.details_message, commit.getCommit().getMessage()));
         linkTextViev.setText(commit.getHtml_url());
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Timber.d("Save commit onSaveInstanceState");
+        outState.putParcelable(COMMIT, commit);
+        super.onSaveInstanceState(outState);
     }
 }
